@@ -103,20 +103,17 @@ NATLEN::DATA_STRUCTURES::SingleNode<T>::operator +(SingleNode<T>& a_node)
 	{
 		throw CIRCULAR_MEMORY_LOOP;
 	}
-	else
+	//else
+	SingleNode<T>* baseNode = new SingleNode(*this);
+	SingleNode<T>* connectedNode = new SingleNode(a_node);
+	SingleNode<T>* goThrough = baseNode;
+	while (nullptr != goThrough->m_pNext)
 	{
-		
-		//need to make a deep copy to goThrough
-
-
-		SingleNode<T>* goThrough = this;
-		while (nullptr != goThrough->m_pNext)
-		{
-			goThrough = goThrough->m_pNext;
-		}
-		goThrough->m_pNext = &a_node;
+		goThrough = goThrough->m_pNext;
 	}
-	return *this;
+	goThrough->m_pNext = connectedNode;
+	return *baseNode;
 };
+
 
 #endif
